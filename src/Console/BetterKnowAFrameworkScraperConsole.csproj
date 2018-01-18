@@ -11,4 +11,8 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BetterKnowAFrameworkScraper\BetterKnowAFrameworkScraper.csproj" />
+  </ItemGroup>
+
 </Project>
