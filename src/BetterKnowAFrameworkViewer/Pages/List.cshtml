@@ -1,0 +1,66 @@
+﻿@page
+@using static Xcodo.BetterKnowAFrameworkScraper.ShortLinkPage
+@inject ScrapeManager Manager
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Better Know A Framework</title>
+</head>
+<body>
+    <h1>Better Know A Framework</h1>
+    @if (!Manager.SetupComplete)
+    {
+        <p>No data loaded</p>
+    }
+    else
+    {
+        <table>
+            @foreach (var item in Manager.Data.BetterKnowData.OrderByDescending(x => x.ShowNumber))
+            {
+                @if (item.Response != LinkResponse.Success)
+                {
+                    <tr class="error">
+                        <td>@item.ShowNumber</td>
+                        <td>@item.Response</td>
+                        <td>Link error at <a href="@item.ShortAddress">@item.ShortAddress</a></td>
+                    </tr>
+                }
+                else
+                {
+                    <tr class="okay">
+                        @{
+
+                            <td>@item.ShowNumber</td>
+                            var title = @item.LinkedTitle;
+                            if (title?.Length > 73)
+                            {
+                                title = title.Substring(0, 70) + "...";
+                            }
+                            <td>@title</td>
+                            if (item.LinkedAddress == null)
+                            {
+                                <td>No link found at <a href="@item.ShortAddress">@item.ShortAddress</a></td>
+                            }
+                            else
+                            {
+                                var address = @item.LinkedAddress.ToString();
+                                if (address?.Length > 73)
+                                {
+                                    address = address.Substring(0, 70) + "...";
+                                }
+                                <td><a href="@item.LinkedAddress">@address</a></td>
+                            }
+                        }
+                    </tr>
+                }
+            }
+        </table>
+    }
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿@page
+@inject ScrapeManager Manager
+@{
+    Layout = null;
+    var before = Manager.SetupComplete;
+    if (!before)
+    {
+        await Manager.LoadDataFromFile();
+    }
+    var after = Manager.SetupComplete;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Load From File</title>
+</head>
+<body>
+    @if (before)
+    {
+        <p>Data already loaded</p>
+    }
+    else
+    {
+        if (after)
+        {
+            <p>Loaded data from file (@Manager.Data.BetterKnowData.Count records)</p>
+        }
+        else
+        {
+            <p>Failed to load file</p>
+        }
+    }
+</body>
+</html>

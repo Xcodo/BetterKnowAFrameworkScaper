@@ -1,0 +1,18 @@
+﻿@page
+@inject ScrapeManager Manager
+@{
+    Layout = null;
+    await Manager.SaveDataToFile();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SaveToFile</title>
+</head>
+<body>
+    <p>Saved</p>
+</body>
+</html>
